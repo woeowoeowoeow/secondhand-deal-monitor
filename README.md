@@ -20,8 +20,9 @@ state/state.json ─► committed to the `state` branch (keys are salted SHA-256
 | Source | Status | Notes |
 |---|---|---|
 | eBay | Implemented. **Needs free API keys** (`EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`) | Official Browse API, `deliveryOptions:{SELLER_ARRANGED_LOCAL_PICKUP}` + 50 mi radius from 30097. ~1.8k of the 5k/day default calls. |
+| Craigslist, Reddit (via F5Bot), OfferUp | **Alert-email intake** (`INTAKE_TOPIC`) | Each site's own alert emails go to `ntfy-<INTAKE_TOPIC>@ntfy.sh`. The monitor reads that private topic (messages are kept 12 h) and runs the same strict filter. Senders must include a plain-text part, because ntfy drops HTML links. |
 | Reddit r/hardwareswap, r/ATLlist | Implemented, **inactive** | Reddit blocks unauthenticated access, and since Nov 2025 new API credentials require Reddit's manual approval. Add `REDDIT_CLIENT_ID`/`REDDIT_CLIENT_SECRET` if you're approved. Only `[USA-GA]` posts offering local pickup in a listed metro town count. |
-| Craigslist | Unsupported | No API. Craigslist blocks automated clients (HTTP 403), and its terms forbid scraping. |
+| Craigslist (direct) | Unsupported | It blocks automated clients (HTTP 403), so it's covered through alert emails instead. |
 | OfferUp, Nextdoor | Unsupported | No public API. Login or app only. |
 | Mercari, Jawa, Swappa, Poshmark | Excluded | Shipping-only platforms, which the local-pickup requirement rules out. |
 | Facebook Marketplace | Excluded (stub ready) | See below. |
