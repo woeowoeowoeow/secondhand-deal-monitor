@@ -1,21 +1,36 @@
 {
- "fps": {},
+ "fps": {
+  "32a028ff921a1a1db513c260": 1795577658.6503744
+ },
  "health": {
+  "email_intake": {
+   "alerted": false,
+   "fails": 0,
+   "last_alert": 0,
+   "last_error": "",
+   "last_ok": 1795577658.6188357
+  },
   "monitor-core": {
    "alerted": false,
    "fails": 0,
    "last_alert": 0,
    "last_error": "",
-   "last_ok": 1795577091.8277645
+   "last_ok": 1795577658.6504455
   }
  },
  "meta": {
   "heartbeat": "2026-11-25",
-  "last_run": 1795577091,
+  "intake_since": "R4FBLTVT3Nem",
+  "last_run": 1795577658,
   "no_sources": {
    "last_alert": 1795577091.827688
   }
  },
  "rejects": {},
- "seen": {}
+ "seen": {
+  "e57780b7ba02be46c4ea4a7d": {
+   "p": 599.0,
+   "t": 1795577658.6503744
+  }
+ }
 }
