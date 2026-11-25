@@ -1,0 +1,101 @@
+# Secondhand PC hardware deal monitor — configuration.
+# Edit this file and push; the next scheduled run picks it up.
+# Alerts fire only when price is STRICTLY BELOW max_price.
+
+[location]
+postal_code = "30096"          # Duluth, GA
+radius_miles = 50
+# 3-digit ZIP prefixes considered inside the radius (sanity check on top of
+# each marketplace's own radius search). Metro Atlanta, Gainesville, Athens.
+allowed_zip3 = ["300", "301", "302", "303", "305", "306"]
+# Town names accepted for free-text sources (Reddit). Lower case.
+allowed_towns = [
+  "atlanta", "atl", "duluth", "lawrenceville", "suwanee", "buford", "johns creek",
+  "alpharetta", "roswell", "milton", "cumming", "norcross", "peachtree corners",
+  "lilburn", "snellville", "tucker", "stone mountain", "dunwoody", "sandy springs",
+  "chamblee", "doraville", "brookhaven", "decatur", "marietta", "smyrna", "kennesaw",
+  "acworth", "woodstock", "canton", "sugar hill", "dacula", "grayson", "loganville",
+  "conyers", "lithonia", "covington", "mcdonough", "stockbridge", "jonesboro",
+  "east point", "college park", "fayetteville", "peachtree city", "newnan",
+  "douglasville", "austell", "mableton", "powder springs", "gainesville", "athens",
+  "flowery branch", "braselton", "hoschton", "winder", "monroe", "dallas", "hiram",
+  "cartersville", "forsyth county", "gwinnett", "cobb", "dekalb", "fulton",
+]
+
+[filters]
+# Prices below max_price * min_price_ratio are treated as bait/scam/misleading.
+min_price_ratio = 0.35
+# Re-notify an already-alerted listing only if its price dropped by at least
+# this many dollars AND this fraction.
+renotify_min_drop_usd = 10
+renotify_min_drop_pct = 0.05
+# Accept auctions? Current bids are misleading, so off by default.
+allow_auctions = false
+
+[health]
+# Alert after this many consecutive failed runs of a source, then at most
+# once per `repeat_hours` while it stays broken. Recovery is also reported.
+fail_threshold = 3
+repeat_hours = 12
+
+[notify]
+server = "https://ntfy.sh"     # topic comes from the NTFY_TOPIC secret
+
+# ---------------------------------------------------------------- watchlist
+# id must match a matcher in monitor/matcher.py. Set enabled=false to pause.
+
+[[products]]
+id = "ryzen5_9600x"
+name = "AMD Ryzen 5 9600X"
+max_price = 150
+ebay_query = "9600X"
+ebay_category = "164"          # CPUs/Processors
+
+[[products]]
+id = "ryzen7_9700x"
+name = "AMD Ryzen 7 9700X"
+max_price = 200
+ebay_query = "9700X"
+ebay_category = "164"
+
+[[products]]
+id = "rtx5060ti_16gb"
+name = "NVIDIA RTX 5060 Ti 16GB"
+max_price = 400
+ebay_query = "5060 Ti"
+ebay_category = "27386"        # Graphics/Video Cards
+
+[[products]]
+id = "rtx5070ti_16gb"
+name = "NVIDIA RTX 5070 Ti 16GB"
+max_price = 600
+ebay_query = "5070 Ti"
+ebay_category = "27386"
+
+[[products]]
+id = "asrock_b650i_lightning"
+name = "ASRock B650I Lightning WiFi"
+max_price = 160
+ebay_query = "B650I Lightning"
+ebay_category = "1244"         # Motherboards
+
+[[products]]
+id = "ddr5_32gb_2x16"
+name = "DDR5 32GB (2x16GB) kit"
+max_price = 175
+ebay_query = "DDR5 32GB"
+ebay_category = "170083"       # Memory (RAM)
+
+# ------------------------------------------------------------------ sources
+# A source runs only when enabled AND its required secrets are present.
+
+[sources.ebay]
+enabled = true                 # needs EBAY_CLIENT_ID + EBAY_CLIENT_SECRET
+
+[sources.reddit]
+enabled = true                 # needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET (Reddit-approved app)
+subreddits = ["hardwareswap", "ATLlist"]
+user_agent = "script:secondhand-deal-monitor:1.0 (personal use)"
+
+[sources.facebook]
+enabled = false                # placeholder: see README "Adding Facebook Marketplace"

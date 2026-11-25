@@ -1,0 +1,57 @@
+name: deal-monitor
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"      # GitHub's minimum; actual start times are best-effort
+  workflow_dispatch:
+    inputs:
+      test_notify:
+        description: "Send a test ntfy notification instead of a normal run"
+        type: boolean
+        default: false
+
+concurrency:
+  group: deal-monitor           # never two runs writing state at once
+  cancel-in-progress: false
+
+permissions:
+  contents: write               # push the state branch
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check out state branch
+        uses: actions/checkout@v4
+        with:
+          ref: state
+          path: state
+      - name: Run monitor
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+          STATE_SALT: ${{ secrets.STATE_SALT }}
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+        run: |
+          if [ "${{ inputs.test_notify }}" = "true" ]; then
+            python3 -m monitor --test-notify
+          else
+            python3 -m monitor --state state/state.json
+          fi
+      - name: Save state
+        if: always()
+        working-directory: state
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "state unchanged"; exit 0; fi
+          git -c user.name="deal-monitor" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "state $(date -u +%FT%TZ)"
+          for i in 1 2 3; do git push -q origin HEAD:state && exit 0; sleep $((i*5)); done
+          exit 1
