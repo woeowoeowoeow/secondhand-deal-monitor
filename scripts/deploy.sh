@@ -22,6 +22,7 @@ fi
 
 gh secret set NTFY_TOPIC -R "$OWNER/$REPO" < "$CONF/ntfy_topic"
 gh secret set STATE_SALT -R "$OWNER/$REPO" < "$CONF/state_salt"
+gh secret set INTAKE_TOPIC -R "$OWNER/$REPO" < "$CONF/intake_topic"
 
 if ! git ls-remote --exit-code origin refs/heads/state >/dev/null 2>&1; then
   blob=$(printf '# deal-monitor state (hashed, written by the workflow)\n' | git hash-object -w --stdin)

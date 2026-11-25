@@ -13,6 +13,7 @@ class Source:
     name = "base"
     display = "Base"
     required_env: tuple[str, ...] = ()
+    state = None    # set by the runner; lets a source keep a cursor in persistent state
 
     def __init__(self, cfg: dict):
         self.cfg = cfg

@@ -293,6 +293,8 @@ CHECKS = {
 
 # -------------------------------------------------------------------- location
 
+# sources whose own search already applies the 50-mile radius around the configured ZIP
+RADIUS_TRUSTED = ("ebay", "craigslist")
 ZIP_RE = re.compile(r"\b(\d{3})(\d{2}\b|\*\*)")
 
 
@@ -313,10 +315,10 @@ def location_ok(listing: Listing, loc_cfg: dict) -> tuple[bool, str]:
             return (m[1] in loc_cfg["allowed_zip3"]), f"zip {m[0]} in location"
         if any(re.search(rf"\b{re.escape(t)}\b", loc) for t in loc_cfg["allowed_towns"]):
             return True, "town in radius"
-        if listing.source != "ebay":
+        if listing.source not in RADIUS_TRUSTED:
             return False, f"location '{listing.location}' not verifiably within radius"
-    # eBay's own pickup-radius search already constrained this; accept.
-    return listing.source == "ebay", "radius enforced by marketplace search"
+    # eBay's pickup-radius search / the Craigslist saved search's radius already constrained this.
+    return listing.source in RADIUS_TRUSTED, "radius enforced by marketplace search"
 
 
 # ----------------------------------------------------------------------- main

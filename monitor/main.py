@@ -48,6 +48,7 @@ def run(cfg: dict, state: State, dry: bool = False) -> dict:
 
     for cls in ALL:
         src = cls(cfg)
+        src.state = state
         if not src.enabled():
             statuses[src.name] = "disabled in config"
             continue

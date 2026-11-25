@@ -166,7 +166,7 @@ class TestFilters(unittest.TestCase):
         self.assertIsNone(v.product_id)
 
     def test_in_radius_zip_ok(self):
-        self.assertTrue(run(L("AMD Ryzen 7 9700X", 150, postal_code="30096")).ok)
+        self.assertTrue(run(L("AMD Ryzen 7 9700X", 150, postal_code="30097")).ok)
 
     def test_auction_rejected(self):
         v = run(L("AMD Ryzen 7 9700X", 50, buying_options=["AUCTION"]))

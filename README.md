@@ -1,6 +1,6 @@
 # Secondhand PC hardware deal monitor
 
-Checks local-pickup listings within 50 miles of Duluth, GA (30096) on a schedule.
+Checks local-pickup listings within 50 miles of Duluth, GA (30097) on a schedule.
 When a watchlist part is listed **strictly below** your price limit, it pushes an
 alert to a private [ntfy](https://ntfy.sh) topic. Runs on GitHub Actions at $0. Python stdlib only, no paid APIs.
 
@@ -19,7 +19,7 @@ state/state.json ─► committed to the `state` branch (keys are salted SHA-256
 
 | Source | Status | Notes |
 |---|---|---|
-| eBay | Implemented. **Needs free API keys** (`EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`) | Official Browse API, `deliveryOptions:{SELLER_ARRANGED_LOCAL_PICKUP}` + 50 mi radius from 30096. ~1.8k of the 5k/day default calls. |
+| eBay | Implemented. **Needs free API keys** (`EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`) | Official Browse API, `deliveryOptions:{SELLER_ARRANGED_LOCAL_PICKUP}` + 50 mi radius from 30097. ~1.8k of the 5k/day default calls. |
 | Reddit r/hardwareswap, r/ATLlist | Implemented, **inactive** | Reddit blocks unauthenticated access, and since Nov 2025 new API credentials require Reddit's manual approval. Add `REDDIT_CLIENT_ID`/`REDDIT_CLIENT_SECRET` if you're approved. Only `[USA-GA]` posts offering local pickup in a listed metro town count. |
 | Craigslist | Unsupported | No API. Craigslist blocks automated clients (HTTP 403), and its terms forbid scraping. |
 | OfferUp, Nextdoor | Unsupported | No public API. Login or app only. |

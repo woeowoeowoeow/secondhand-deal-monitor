@@ -3,7 +3,7 @@
 # Alerts fire only when price is STRICTLY BELOW max_price.
 
 [location]
-postal_code = "30096"          # Duluth, GA
+postal_code = "30097"          # Johns Creek, GA
 radius_miles = 50
 # 3-digit ZIP prefixes considered inside the radius (sanity check on top of
 # each marketplace's own radius search). Metro Atlanta, Gainesville, Athens.
@@ -91,6 +91,9 @@ ebay_category = "170083"       # Memory (RAM)
 
 [sources.ebay]
 enabled = true                 # needs EBAY_CLIENT_ID + EBAY_CLIENT_SECRET
+
+[sources.email_intake]
+enabled = true                 # needs INTAKE_TOPIC; alert emails go to ntfy-<INTAKE_TOPIC>@ntfy.sh
 
 [sources.reddit]
 enabled = true                 # needs REDDIT_CLIENT_ID + REDDIT_CLIENT_SECRET (Reddit-approved app)

@@ -30,7 +30,7 @@ EBAY_ITEM = {
     "localizedAspects": [{"name": "Memory Size", "value": "16 GB"},
                          {"name": "Chipset/GPU Model", "value": "NVIDIA GeForce RTX 5070 Ti"}],
     "condition": "Used",
-    "itemLocation": {"postalCode": "30096", "city": "Duluth", "stateOrProvince": "GA", "country": "US"},
+    "itemLocation": {"postalCode": "30097", "city": "Duluth", "stateOrProvince": "GA", "country": "US"},
     "pickupOptions": [{"pickupLocationType": "LOCAL_PICKUP"}],
 }
 
@@ -69,7 +69,7 @@ class TestEbayMapping(unittest.TestCase):
     def test_search_params_enforce_pickup_radius(self):
         p = EbaySource(CFG).search_params(CFG["products_by_id"]["rtx5070ti_16gb"])
         f = p["filter"]
-        for part in ["deliveryOptions:{SELLER_ARRANGED_LOCAL_PICKUP}", "pickupPostalCode:30096",
+        for part in ["deliveryOptions:{SELLER_ARRANGED_LOCAL_PICKUP}", "pickupPostalCode:30097",
                      "pickupRadius:50", "pickupRadiusUnit:mi", "pickupCountry:US", "price:[..600]"]:
             self.assertIn(part, f)
         self.assertEqual(p["category_ids"], "27386")
@@ -79,7 +79,7 @@ class TestEbayMapping(unittest.TestCase):
         lst = src.enrich(EbaySource.from_summary(EBAY_SUMMARY))
         self.assertEqual(lst.aspects["memory size"], "16 GB")
         self.assertIn("16GB GDDR7", lst.description)
-        self.assertEqual(lst.postal_code, "30096")
+        self.assertEqual(lst.postal_code, "30097")
 
 
 class TestState(unittest.TestCase):
@@ -135,7 +135,7 @@ class TestReddit(unittest.TestCase):
     def test_hardwareswap_local_ga(self):
         out = post_to_listings(self.post(
             title="[USA-GA] [H] MSI RTX 5070 Ti 16GB, Ryzen 7 9700X [W] PayPal, Local Cash",
-            selftext="Local to Duluth 30096, can ship too.\n\n* MSI RTX 5070 Ti 16GB - $560\n* ~~Ryzen 7 9700X - $190~~ SOLD\n"),
+            selftext="Local to Duluth 30097, can ship too.\n\n* MSI RTX 5070 Ti 16GB - $560\n* ~~Ryzen 7 9700X - $190~~ SOLD\n"),
             CFG)
         self.assertEqual(len(out), 1)
         self.assertEqual(out[0].price, 560)
