@@ -1,0 +1,21 @@
+{
+ "fps": {},
+ "health": {
+  "monitor-core": {
+   "alerted": false,
+   "fails": 0,
+   "last_alert": 0,
+   "last_error": "",
+   "last_ok": 1795577091.8277645
+  }
+ },
+ "meta": {
+  "heartbeat": "2026-11-25",
+  "last_run": 1795577091,
+  "no_sources": {
+   "last_alert": 1795577091.827688
+  }
+ },
+ "rejects": {},
+ "seen": {}
+}
