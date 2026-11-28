@@ -8,20 +8,20 @@
    "fails": 0,
    "last_alert": 0,
    "last_error": "",
-   "last_ok": 1795755426.6414294
+   "last_ok": 1795840961.87418
   },
   "monitor-core": {
    "alerted": false,
    "fails": 0,
    "last_alert": 0,
    "last_error": "",
-   "last_ok": 1795755426.641499
+   "last_ok": 1795840961.8742445
   }
  },
  "meta": {
-  "heartbeat": "2026-11-27",
+  "heartbeat": "2026-11-28",
   "intake_since": "R4FBLTVT3Nem",
-  "last_run": 1795755426,
+  "last_run": 1795840961,
   "no_sources": {
    "last_alert": 1795577091.827688
   }
